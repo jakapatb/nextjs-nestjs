@@ -29,12 +29,16 @@ export class ChatsResolvers {
   @Mutation('createChat')
   async create(@Args('createChatInput') args: CreateChatDto): Promise<Chat> {
     const createdChat = await this.chatsService.create(args)
-    pubSub.publish('chatCreated', { chatCreated: createdChat })
+    const { channel } = args || { channel: 'chatCreated' }
+    console.log(`push to channel: ${channel}`)
+    pubSub.publish(channel, { chatCreated: createdChat })
     return createdChat
   }
 
   @Subscription('chatCreated')
-  chatCreated() {
-    return pubSub.asyncIterator('chatCreated')
+  chatCreated(@Args('channelChatInput') args) {
+    const { channel } = args || { channel: 'chatCreated' }
+    console.log(`Subscription: ${channel}`)
+    return pubSub.asyncIterator(channel)
   }
 }
