@@ -30,7 +30,6 @@ export class ChatsResolvers {
   async create(@Args('createChatInput') args: CreateChatDto): Promise<Chat> {
     const createdChat = await this.chatsService.create(args)
     const { channel } = args || { channel: 'chatCreated' }
-    console.log(`push to channel: ${channel}`)
     pubSub.publish(channel, { chatCreated: createdChat })
     return createdChat
   }
@@ -38,7 +37,6 @@ export class ChatsResolvers {
   @Subscription('chatCreated')
   chatCreated(@Args('channelChatInput') args) {
     const { channel } = args || { channel: 'chatCreated' }
-    console.log(`Subscription: ${channel}`)
     return pubSub.asyncIterator(channel)
   }
 }
