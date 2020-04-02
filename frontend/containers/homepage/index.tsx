@@ -28,7 +28,7 @@ export const Homepage = () => {
   const { loading, data, error } = useSubscription(SUB_CHATS)
   const [sendMessage] = useMutation(SEND_MESSAGE)
   const handleSent = () => {
-    sendMessage({ variables: { $payload: { channel: '001', text: 'NUDE' } } })
+    sendMessage({ variables: { payload: { channel: '001', text: 'NUDE' } } })
   }
   return (
     <div>

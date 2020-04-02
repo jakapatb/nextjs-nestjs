@@ -16,9 +16,10 @@ const WS_URI = process.env.SERVER_URI_WS
 const COOKIE_JWT_TOKEN = process.env.COOKIE_JWT_TOKEN
 
 export default function createApolloClient(initialState, ctx) {
-  const ssrMode = Boolean(ctx)
-
-  let token
+  const ssrMode = typeof window === 'undefined'
+  const omitTypeheadersnameLink = createOmitTypenameLink()
+  const terminateLink = createTerminateLink(ctx?.req?.headers)
+  let link, token
   const httpLink = new HttpLink({
     uri: HTTP_URI,
     credentials: 'same-origin',
@@ -27,15 +28,16 @@ export default function createApolloClient(initialState, ctx) {
     },
     fetch
   })
-  let link = httpLink
   if (ssrMode) {
     // on Server...
     token = parseCookies(ctx)[COOKIE_JWT_TOKEN]
+
+    link = ApolloLink.from([omitTypeheadersnameLink, loggerLink, httpLink])
   } else {
     // on Client...
 
     token = parseCookies()[COOKIE_JWT_TOKEN]
-    /*const client = new SubscriptionClient(WS_URI, {
+    const client = new SubscriptionClient(WS_URI, {
       reconnect: true,
       connectionParams: {
         headers: {
@@ -44,7 +46,7 @@ export default function createApolloClient(initialState, ctx) {
       }
     })
     const wsLink = new WebSocketLink(client)
-    link = split(
+    const splitLink = split(
       // split based on operation type
       ({ query }) => {
         const definition = getMainDefinition(query)
@@ -52,13 +54,13 @@ export default function createApolloClient(initialState, ctx) {
       },
       wsLink,
       httpLink
-    ) */
+    )
+    link = ApolloLink.from([omitTypeheadersnameLink, loggerLink, splitLink])
   }
-  const omitTypeheadersnameLink = createOmitTypenameLink()
-  const terminateLink = createTerminateLink(ctx?.req?.headers)
+
   return new ApolloClient({
     ssrMode,
-    link: ApolloLink.from([loggerLink, link]),
+    link,
     cache: new InMemoryCache().restore(initialState)
   })
 }
