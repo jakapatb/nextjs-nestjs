@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useQuery, useSubscription, useMutation } from '@apollo/react-hooks'
 import gql from 'graphql-tag'
 const GET_CHATS = gql`
@@ -25,7 +25,24 @@ const SEND_MESSAGE = gql`
   }
 `
 export const Homepage = () => {
-  const { loading, data, error } = useSubscription(SUB_CHATS)
+  const { loading, data, error, subscribeToMore } = useQuery(GET_CHATS)
+  useEffect(() => {
+    const unSub = subscribeToMore({
+      document: SUB_CHATS,
+      updateQuery: (prevResult, { subscriptionData }) => {
+        if (!subscriptionData.data) return prevResult
+        else {
+          return {
+            getChats: [...prevResult.getChats, subscriptionData.data.chatCreated]
+          }
+        }
+      }
+    })
+    return () => {
+      unSub()
+    }
+  }, [subscribeToMore])
+
   const [sendMessage] = useMutation(SEND_MESSAGE)
   const handleSent = (e) => {
     if (e.key === 'Enter') {
@@ -35,7 +52,10 @@ export const Homepage = () => {
   return (
     <div>
       <h1>Chat</h1>
-      {!loading && <p>{data?.chatCreated?.text}</p>}
+      {!loading &&
+        data?.getChats.map(({ text }, index) => {
+          return <p key={index}>{text}</p>
+        })}
       <input placeholder="Type here" onKeyPress={handleSent} />
     </div>
   )
