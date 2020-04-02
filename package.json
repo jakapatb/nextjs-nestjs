@@ -13,5 +13,9 @@
   "scripts": {
     "dev": "lerna run dev --stream"
   },
-  "name": "ticketista"
+  "name": "ticketista",
+  "dependencies": {
+    "net": "^1.0.2",
+    "tls": "0.0.1"
+  }
 }
