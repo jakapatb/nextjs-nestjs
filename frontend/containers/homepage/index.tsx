@@ -18,8 +18,8 @@ const SUB_CHATS = gql`
   }
 `
 const SEND_MESSAGE = gql`
-  mutation sendMessage {
-    createChat(createChatInput: { channel: "001", text: "NUDE" }) {
+  mutation sendMessage($createChatInput: CreateChatInput) {
+    createChat(createChatInput: $createChatInput) {
       text
     }
   }
@@ -27,14 +27,16 @@ const SEND_MESSAGE = gql`
 export const Homepage = () => {
   const { loading, data, error } = useSubscription(SUB_CHATS)
   const [sendMessage] = useMutation(SEND_MESSAGE)
-  const handleSent = () => {
-    sendMessage({ variables: { payload: { channel: '001', text: 'NUDE' } } })
+  const handleSent = (e) => {
+    if (e.key === 'Enter') {
+      sendMessage({ variables: { createChatInput: { channel: '001', text: e.target.value } } })
+    }
   }
   return (
     <div>
       <h1>Chat</h1>
       {!loading && <p>{data?.chatCreated?.text}</p>}
-      <button onClick={handleSent}>Send Nude</button>
+      <input placeholder="Type here" onKeyPress={handleSent} />
     </div>
   )
 }
