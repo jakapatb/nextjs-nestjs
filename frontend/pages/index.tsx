@@ -4,11 +4,7 @@ import Homepage from 'containers/homepage'
 import { Layout } from 'components/Layout'
 
 const Index: React.FC = () => {
-  return (
-    <Layout>
-      <Homepage />
-    </Layout>
-  )
+  return <Homepage />
 }
 
 export default withApollo()(Index)

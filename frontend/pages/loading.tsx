@@ -1,11 +1,11 @@
 import React from 'react'
-import { SplashScreen } from 'components/Loading'
 import { Layout } from 'components/Layout'
-
+import Link from 'next/link'
 const LoadingPage: React.FC = () => {
   return (
     <Layout>
-      <SplashScreen />
+      <h1>Loading page</h1>
+      <Link href="/">Click Here</Link>
     </Layout>
   )
 }
