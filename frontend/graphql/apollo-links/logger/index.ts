@@ -1,4 +1,4 @@
-import { ApolloLink } from 'apollo-link'
+import { ApolloLink } from '@apollo/client'
 import formatMessage from './format-message'
 import logging from './logging'
 

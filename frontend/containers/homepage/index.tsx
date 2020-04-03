@@ -1,6 +1,5 @@
 import React, { useEffect, InputHTMLAttributes } from 'react'
-import { useQuery, useSubscription, useMutation } from '@apollo/react-hooks'
-import gql from 'graphql-tag'
+import { useQuery, useSubscription, useMutation, gql } from '@apollo/client'
 const GET_CHATS = gql`
   query getChats {
     getChats {
