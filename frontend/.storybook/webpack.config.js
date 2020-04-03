@@ -13,8 +13,11 @@ module.exports = ({ config }) => {
       require.resolve('react-docgen-typescript-loader')
     ]
   })
+  config.resolve.alias['components'] = path.join(__dirname, '../components')
+  config.resolve.alias['containers'] = path.join(__dirname, '../containers')
+  config.resolve.alias['graphql'] = path.join(__dirname, '../graphql')
+  config.resolve.alias['assets'] = path.join(__dirname, '../assets')
 
-  config.resolve.alias['~'] = path.resolve(__dirname)
   config.resolve.extensions.push('.ts', '.tsx')
 
   return config
