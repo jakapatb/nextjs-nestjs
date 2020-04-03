@@ -1,9 +1,14 @@
 import React from 'react'
 import { withApollo } from 'graphql/withApollo'
 import Homepage from 'containers/homepage'
+import { Layout } from 'components/Layout'
 
 const Index: React.FC = () => {
-  return <Homepage />
+  return (
+    <Layout>
+      <Homepage />
+    </Layout>
+  )
 }
 
 export default withApollo()(Index)

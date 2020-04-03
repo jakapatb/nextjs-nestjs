@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, InputHTMLAttributes } from 'react'
 import { useQuery, useSubscription, useMutation } from '@apollo/react-hooks'
 import gql from 'graphql-tag'
 const GET_CHATS = gql`
@@ -44,9 +44,11 @@ export const Homepage = () => {
   }, [subscribeToMore])
 
   const [sendMessage] = useMutation(SEND_MESSAGE)
-  const handleSent = (e) => {
+  const handleSent = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter') {
-      sendMessage({ variables: { createChatInput: { channel: '001', text: e.target.value } } })
+      sendMessage({
+        variables: { createChatInput: { channel: '001', text: (event.target as HTMLInputElement).value } }
+      })
     }
   }
   return (
@@ -56,7 +58,7 @@ export const Homepage = () => {
         data?.getChats.map(({ text }, index) => {
           return <p key={index}>{text}</p>
         })}
-      <input placeholder="Type here" onKeyPress={handleSent} />
+      <input placeholder="Type here" onKeyPress={handleSent} disabled={loading} />
     </div>
   )
 }
