@@ -33,6 +33,5 @@
             "**/*.ts",
             "**/*.tsx",
             "**./*.d.ts",
-            "graphql/withApollo.tss"
       ]
 }

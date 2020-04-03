@@ -2,7 +2,7 @@ import React, { useEffect, InputHTMLAttributes } from 'react'
 import { useQuery, useSubscription, useMutation, gql } from '@apollo/client'
 const GET_CHATS = gql`
   query getChats {
-    getChats {
+    messages: getChats {
       id
       text
     }
@@ -10,7 +10,7 @@ const GET_CHATS = gql`
 `
 const SUB_CHATS = gql`
   subscription subChat {
-    chatCreated(channelChatInput: { channel: "001" }) {
+    message: chatCreated(channelChatInput: { channel: "001" }) {
       id
       text
     }
@@ -20,44 +20,50 @@ const SEND_MESSAGE = gql`
   mutation sendMessage($createChatInput: CreateChatInput) {
     createChat(createChatInput: $createChatInput) {
       text
+      id
     }
   }
 `
 export const Homepage = () => {
-  const { loading, data, error, subscribeToMore } = useQuery(GET_CHATS)
-  useEffect(() => {
-    const unSub = subscribeToMore({
-      document: SUB_CHATS,
-      updateQuery: (prevResult, { subscriptionData }) => {
-        if (!subscriptionData.data) return prevResult
-        else {
-          return {
-            getChats: [...prevResult.getChats, subscriptionData.data.chatCreated]
-          }
-        }
-      }
-    })
-    return () => {
-      unSub()
+  const { loading, data, error } = useQuery(GET_CHATS)
+
+  const { loading: subscripting, data: subData } = useSubscription(SUB_CHATS, {
+    onSubscriptionData: ({ client, subscriptionData }) => {
+      const { messages: cachedMessages } = client.readQuery({
+        query: GET_CHATS
+      })
+      console.log(cachedMessages, subscriptionData)
+      /*     cachedMessages.messages.push(subscriptionData?.data?.chatCreated)
+      client.writeQuery({
+        query: GET_CHATS,
+        data: cachedMessages
+      }) */
     }
-  }, [subscribeToMore])
+  })
 
   const [sendMessage] = useMutation(SEND_MESSAGE)
   const handleSent = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter') {
+      const value = (event.target as HTMLInputElement).value
+      console.log('mutate', value)
       sendMessage({
-        variables: { createChatInput: { channel: '001', text: (event.target as HTMLInputElement).value } }
+        variables: { createChatInput: { channel: '001', text: value } }
       })
     }
   }
+
+  console.log(subData)
   return (
     <div>
       <h1>Chat</h1>
       {!loading &&
-        data?.getChats.map(({ text }, index) => {
-          return <p key={index}>{text}</p>
+        data?.messages?.map((chat, index) => {
+          return <p key={index}>{chat?.text || 'hi'}</p>
         })}
-      <input placeholder="Type here" onKeyPress={handleSent} disabled={loading} />
+      <input placeholder="Type here" onKeyPress={handleSent} />
+      <div>
+        <h2>newest message: {subData?.message}</h2>
+      </div>
     </div>
   )
 }

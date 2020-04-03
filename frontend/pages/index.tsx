@@ -1,5 +1,5 @@
 import React from 'react'
-import { withApollo } from 'graphql/withApollo'
+import { withApollo } from 'gql/withApollo'
 import Homepage from 'containers/homepage'
 import { Layout } from 'components/Layout'
 
