@@ -10,7 +10,7 @@ const Contianer = styled.div`
 const Homepage: React.FC = () => {
   return (
     <Contianer>
-      <Cube width={100} height={300} depth={100} />
+      <Cube width={300} height={300} depth={500} />
     </Contianer>
   )
 }
