@@ -8,13 +8,12 @@ import { GlobalStyles } from 'assets/theme/globalstyles'
 const MyApp = ({ Component, pageProps }: AppProps) => {
   return (
     <ThemeProvider theme={theme}>
-      <div>
-        <Head>
-          <title>Tickettista</title>
-        </Head>
-        <GlobalStyles />
-        <Component {...pageProps} />
-      </div>
+      <Head>
+        <title>Tickettista</title>
+      </Head>
+      <GlobalStyles />
+
+      <Component {...pageProps} />
     </ThemeProvider>
   )
 }

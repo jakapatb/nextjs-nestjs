@@ -1,4 +1,4 @@
-import { ApolloLink } from '@apollo/client'
+import { ApolloLink } from 'apollo-link'
 const isFile = (value) => {
   const booleaner =
     (typeof File !== 'undefined' && value instanceof File) || (typeof Blob !== 'undefined' && value instanceof Blob)
