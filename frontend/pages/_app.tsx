@@ -10,7 +10,7 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
   return (
     <ThemeProvider theme={theme}>
       <Head>
-        <title>Tickettista</title>
+        <title>NOMAX</title>
       </Head>
       <GlobalStyles />
       <Component {...pageProps} />
