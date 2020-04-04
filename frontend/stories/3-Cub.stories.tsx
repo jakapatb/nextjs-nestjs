@@ -11,7 +11,7 @@ const Contianer = styled(motion.div)`
     font-size: 120px;
   }
 `
-const Homepage: React.FC = () => {
+export const CubeBox: React.FC = () => {
   return (
     <Contianer>
       <Cube width={256} height={256} depth={256}>
@@ -26,4 +26,7 @@ const Homepage: React.FC = () => {
   )
 }
 
-export default Homepage
+export default {
+  title: 'Cube 3D',
+  component: CubeBox
+}

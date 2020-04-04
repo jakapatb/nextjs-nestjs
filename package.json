@@ -12,9 +12,9 @@
   },
   "scripts": {
     "dev": "lerna run dev --stream",
-    "storybook": "lerna run storybook --stream"
+    "storybook": "yarn workspace frontend storybook"
   },
-  "name": "ticketista",
+  "name": "nomax",
   "dependencies": {
     "net": "^1.0.2",
     "tls": "0.0.1"
