@@ -27,6 +27,6 @@ export const CubeBox: React.FC = () => {
 }
 
 export default {
-  title: 'Cube 3D',
+  title: '3D',
   component: CubeBox
 }

@@ -1,5 +1,15 @@
 const path = require('path')
 module.exports = ({ config }) => {
+  /*   config.module.rules.push({
+    use: [
+      {
+        loader: 'style-loader' // creates style nodes from JS strings
+      },
+      {
+        loader: 'css-loader' // translates CSS into CommonJS
+      }
+    ]
+  }) */
   config.module.rules.push({
     test: /\.tsx?$/,
     exclude: /node_modules/,
@@ -15,7 +25,7 @@ module.exports = ({ config }) => {
   })
   config.resolve.alias['components'] = path.join(__dirname, '../components')
   config.resolve.alias['containers'] = path.join(__dirname, '../containers')
-  config.resolve.alias['graphql'] = path.join(__dirname, '../graphql')
+  config.resolve.alias['gql'] = path.join(__dirname, '../gql')
   config.resolve.alias['assets'] = path.join(__dirname, '../assets')
 
   config.resolve.extensions.push('.ts', '.tsx')
