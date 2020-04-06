@@ -1,5 +1,8 @@
+scalar Date
+scalar ObjectId
+
 type Query {
-  getChats: [Chat]
+  chats: [Chat]
   chat(id: ID!): Chat
 }
 
@@ -12,7 +15,7 @@ type Subscription {
 }
 
 type Chat {
-  id: Int
+  _id: ObjectId!
   text: String
 }
 

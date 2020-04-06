@@ -1,21 +1,22 @@
 import { Injectable } from '@nestjs/common'
-import { Chat } from '../graphql.schema'
+import { ChatDocument } from './schemas/chat.schemas'
+import { Model } from 'mongoose'
+import { InjectModel } from '@nestjs/mongoose'
+import { CreateChatDto } from './dto/create-chat.dto'
+import { Chat } from 'src/graphql.schema'
 
 @Injectable()
 export class ChatsService {
-  private readonly chats: Chat[] = [{ id: 1, text: 'Chat' }]
+  constructor(@InjectModel('Chat') private chatModel: Model<ChatDocument>) {}
 
-  create(chat: Chat): Chat {
-    chat.id = this.chats.length + 1
-    this.chats.push(chat)
+  async findAll(): Promise<ChatDocument[]> {
+    const chats = await this.chatModel.find().exec()
+    return chats
+  }
+
+  async create(createChatDto: CreateChatDto): Promise<Chat> {
+    const createdChat = new this.chatModel(createChatDto)
+    const chat = await createdChat.save()
     return chat
-  }
-
-  findAll(): Chat[] {
-    return this.chats
-  }
-
-  findOneById(id: number): Chat {
-    return this.chats.find((chat) => chat.id === id)
   }
 }

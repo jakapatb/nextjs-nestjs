@@ -1,3 +1,4 @@
+
 /** ------------------------------------------------------
  * THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
  * -------------------------------------------------------
@@ -6,28 +7,30 @@
 /* tslint:disable */
 /* eslint-disable */
 export interface ChannelChatInput {
-  channel?: string
+    channel?: string;
 }
 
 export interface CreateChatInput {
-  channel?: string
-  text?: string
+    channel?: string;
+    text?: string;
 }
 
 export interface Chat {
-  id?: number
-  text?: string
+    _id: ObjectId;
+    text?: string;
 }
 
 export interface IMutation {
-  createChat(createChatInput?: CreateChatInput): Chat | Promise<Chat>
+    createChat(createChatInput?: CreateChatInput): Chat | Promise<Chat>;
 }
 
 export interface IQuery {
-  getChats(): Chat[] | Promise<Chat[]>
-  chat(id: string): Chat | Promise<Chat>
+    chats(): Chat[] | Promise<Chat[]>;
+    chat(id: string): Chat | Promise<Chat>;
 }
 
 export interface ISubscription {
-  chatCreated(channelChatInput?: ChannelChatInput): Chat | Promise<Chat>
+    chatCreated(channelChatInput?: ChannelChatInput): Chat | Promise<Chat>;
 }
+
+export type ObjectId = any;

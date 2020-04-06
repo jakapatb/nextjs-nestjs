@@ -7,6 +7,7 @@ async function bootstrap() {
   app.useGlobalPipes(new ValidationPipe())
 
   await app.listen(5000)
+  console.log(`DB_URL : ${process.env.DB_URL}`)
   console.log(`Application is running on: ${await app.getUrl()}`)
 }
 bootstrap()

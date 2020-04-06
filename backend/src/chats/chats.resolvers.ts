@@ -5,6 +5,7 @@ import { Chat } from '../graphql.schema'
 import { ChatsGuard } from './chats.guard'
 import { ChatsService } from './chats.service'
 import { CreateChatDto } from './dto/create-chat.dto'
+import { ChatDocument } from './schemas/chat.schemas'
 
 const pubSub = new PubSub()
 
@@ -12,20 +13,11 @@ const pubSub = new PubSub()
 export class ChatsResolvers {
   constructor(private readonly chatsService: ChatsService) {}
 
-  @Query()
+  @Query('chats')
   @UseGuards(ChatsGuard)
-  async getChats() {
+  async chats(): Promise<ChatDocument[]> {
     return this.chatsService.findAll()
   }
-
-  @Query('chat')
-  async findOneById(
-    @Args('id', ParseIntPipe)
-    id: number
-  ): Promise<Chat> {
-    return this.chatsService.findOneById(id)
-  }
-
   @Mutation('createChat')
   async create(@Args('createChatInput') args: CreateChatDto): Promise<Chat> {
     const createdChat = await this.chatsService.create(args)
@@ -34,9 +26,19 @@ export class ChatsResolvers {
     return createdChat
   }
 
+  /*   @Query('chat')
+  async findOneById(
+    @Args('id', ParseIntPipe)
+    id: number
+  ): Promise<Chat> {
+    return this.chatsService.findOneById(id)
+  } */
+
+  /*   
+
   @Subscription('chatCreated')
   chatCreated(@Args('channelChatInput') args) {
     const { channel } = args || { channel: 'chatCreated' }
     return pubSub.asyncIterator(channel)
-  }
+  } */
 }
