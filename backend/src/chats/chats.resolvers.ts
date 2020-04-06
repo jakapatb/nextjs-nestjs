@@ -15,8 +15,8 @@ export class ChatsResolvers {
 
   @Query('chats')
   @UseGuards(ChatsGuard)
-  async chats(): Promise<ChatDocument[]> {
-    return this.chatsService.findAll()
+  async chats(@Args('channel') args: string): Promise<ChatDocument[]> {
+    return this.chatsService.findAll(args)
   }
   @Mutation('createChat')
   async create(@Args('createChatInput') args: CreateChatDto): Promise<Chat> {
@@ -26,19 +26,17 @@ export class ChatsResolvers {
     return createdChat
   }
 
+  @Subscription('chatCreated')
+  chatCreated(@Args('channelChatInput') args) {
+    const { channel } = args || { channel: 'chatCreated' }
+    console.log('Sub Channel' + channel)
+    return pubSub.asyncIterator(channel)
+  }
   /*   @Query('chat')
   async findOneById(
     @Args('id', ParseIntPipe)
     id: number
   ): Promise<Chat> {
     return this.chatsService.findOneById(id)
-  } */
-
-  /*   
-
-  @Subscription('chatCreated')
-  chatCreated(@Args('channelChatInput') args) {
-    const { channel } = args || { channel: 'chatCreated' }
-    return pubSub.asyncIterator(channel)
   } */
 }

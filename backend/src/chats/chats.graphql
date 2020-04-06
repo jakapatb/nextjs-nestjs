@@ -2,8 +2,8 @@ scalar Date
 scalar ObjectId
 
 type Query {
-  chats: [Chat]
-  chat(id: ID!): Chat
+  chats(channel: String!): [Chat]
+  chat(_id: ID!): Chat
 }
 
 type Mutation {
@@ -17,6 +17,7 @@ type Subscription {
 type Chat {
   _id: ObjectId!
   text: String
+  channel: String
 }
 
 input CreateChatInput {

@@ -7,4 +7,4 @@ const Index: React.FC = () => {
   return <Homepage />
 }
 
-export default withApollo()(Index)
+export default Index

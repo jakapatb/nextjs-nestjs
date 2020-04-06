@@ -3,8 +3,8 @@ import { useQuery, useMutation } from '@apollo/react-hooks'
 import gql from 'graphql-tag'
 const GET_CHATS = gql`
   query getChats {
-    getChats {
-      id
+    chats(channel: "001") {
+      _id
       text
     }
   }
@@ -12,7 +12,7 @@ const GET_CHATS = gql`
 const SUB_CHATS = gql`
   subscription subChat {
     chatCreated(channelChatInput: { channel: "001" }) {
-      id
+      _id
       text
     }
   }
@@ -21,6 +21,8 @@ const SEND_MESSAGE = gql`
   mutation sendMessage($createChatInput: CreateChatInput) {
     createChat(createChatInput: $createChatInput) {
       text
+      _id
+      channel
     }
   }
 `
@@ -30,10 +32,11 @@ export const ShowSubscription = () => {
     const unSub = subscribeToMore({
       document: SUB_CHATS,
       updateQuery: (prevResult, { subscriptionData }) => {
+        console.log(subscriptionData)
         if (!subscriptionData.data) return prevResult
         else {
           return {
-            getChats: [...prevResult.getChats, subscriptionData.data.chatCreated]
+            chats: [...prevResult.chats, subscriptionData.data.chatCreated]
           }
         }
       }
@@ -53,7 +56,7 @@ export const ShowSubscription = () => {
     <div>
       <h1>Chat</h1>
       {!loading &&
-        data?.getChats.map(({ text }, index) => {
+        data?.chats.map(({ text }, index) => {
           return <p key={index}>{text}</p>
         })}
       <input placeholder="Type here" onKeyPress={handleSent} />

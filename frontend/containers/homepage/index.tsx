@@ -12,18 +12,7 @@ const Contianer = styled(motion.div)`
   }
 `
 const Homepage: React.FC = () => {
-  return (
-    <Contianer>
-      <Cube width={256} height={256} depth={256}>
-        <h1>1</h1>
-        <h1>2</h1>
-        <h1>3</h1>
-        <h1>4</h1>
-        <h1>5</h1>
-        <h1>6</h1>
-      </Cube>
-    </Contianer>
-  )
+  return <Contianer></Contianer>
 }
 
 export default Homepage

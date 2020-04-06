@@ -9,8 +9,8 @@ import { Chat } from 'src/graphql.schema'
 export class ChatsService {
   constructor(@InjectModel('Chat') private chatModel: Model<ChatDocument>) {}
 
-  async findAll(): Promise<ChatDocument[]> {
-    const chats = await this.chatModel.find().exec()
+  async findAll(channel: string): Promise<ChatDocument[]> {
+    const chats = await this.chatModel.find({ channel }).exec()
     return chats
   }
 

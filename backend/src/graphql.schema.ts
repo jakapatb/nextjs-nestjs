@@ -18,6 +18,7 @@ export interface CreateChatInput {
 export interface Chat {
     _id: ObjectId;
     text?: string;
+    channel?: string;
 }
 
 export interface IMutation {
@@ -25,8 +26,8 @@ export interface IMutation {
 }
 
 export interface IQuery {
-    chats(): Chat[] | Promise<Chat[]>;
-    chat(id: string): Chat | Promise<Chat>;
+    chats(channel: string): Chat[] | Promise<Chat[]>;
+    chat(_id: string): Chat | Promise<Chat>;
 }
 
 export interface ISubscription {
