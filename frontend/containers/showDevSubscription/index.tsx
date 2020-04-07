@@ -32,7 +32,6 @@ export const ShowSubscription = () => {
     const unSub = subscribeToMore({
       document: SUB_CHATS,
       updateQuery: (prevResult, { subscriptionData }) => {
-        console.log(subscriptionData)
         if (!subscriptionData.data) return prevResult
         else {
           return {

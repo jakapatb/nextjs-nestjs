@@ -1,4 +1,4 @@
-import { ApolloLink } from 'apollo-link'
+import { execute, ApolloLink } from 'apollo-link'
 import formatMessage from './format-message'
 import logging from './logging'
 
@@ -23,9 +23,12 @@ const loggerLink = new ApolloLink((operation, forward) => {
       })
     } else {
       logging.groupCollapsed(...group)
-
       logging.log('INIT', operation)
-      logging.groupEnd(...group)
+      forward(operation).subscribe({
+        next: (data) => logging.log('RESULT', data),
+        error: (error) => logging.log('RESULT', error),
+        complete: () => logging.groupEnd(...group)
+      })
     }
   }
   //ssr donothing
