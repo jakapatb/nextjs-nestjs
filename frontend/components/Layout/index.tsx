@@ -8,7 +8,6 @@ const Container = styled.div<ColorProps>`
 const HeaderContainer = styled.div`
   width: 100%;
   display: flex;
-  border: 1px solid red;
 `
 
 export const Layout: React.FC = ({ children }) => {

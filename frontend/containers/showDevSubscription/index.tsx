@@ -1,31 +1,7 @@
 import React, { useEffect } from 'react'
 import { useQuery, useMutation } from '@apollo/react-hooks'
-import gql from 'graphql-tag'
-const GET_CHATS = gql`
-  query getChats {
-    chats(channel: "001") {
-      _id
-      text
-    }
-  }
-`
-const SUB_CHATS = gql`
-  subscription subChat {
-    chatCreated(channelChatInput: { channel: "001" }) {
-      _id
-      text
-    }
-  }
-`
-const SEND_MESSAGE = gql`
-  mutation sendMessage($createChatInput: CreateChatInput) {
-    createChat(createChatInput: $createChatInput) {
-      text
-      _id
-      channel
-    }
-  }
-`
+import { GET_CHATS, SEND_MESSAGE, SUB_CHATS } from './graphql'
+
 export const ShowSubscription = () => {
   const { loading, data, error, subscribeToMore } = useQuery(GET_CHATS)
   useEffect(() => {

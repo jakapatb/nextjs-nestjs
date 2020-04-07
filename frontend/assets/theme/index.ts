@@ -1,4 +1,4 @@
-const breakpoints: string[] = ['319px', '424px', '767px', '1023px']
+import { width } from 'styled-system'
 
 export const theme = {
   fg: 'palevioletred',
@@ -9,5 +9,6 @@ export const theme = {
     blue: '#007ce0',
     navy: '#004175'
   },
-  breakpoints
+  breakpoints: [/* '319px', */ '424px', '767px', '1023px'],
+  space: [0, 4, 8, 16, 32, 64, 128, 256, 512]
 }
