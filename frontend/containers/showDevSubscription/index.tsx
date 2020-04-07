@@ -55,8 +55,13 @@ export const ShowSubscription = () => {
     <div>
       <h1>Chat</h1>
       {!loading &&
-        data?.chats.map(({ text }, index) => {
-          return <p key={index}>{text}</p>
+        data?.chats.map(({ _id, text }, index) => {
+          return (
+            <p key={index}>
+              {' '}
+              {_id}:{text}
+            </p>
+          )
         })}
       <input placeholder="Type here" onKeyPress={handleSent} />
     </div>

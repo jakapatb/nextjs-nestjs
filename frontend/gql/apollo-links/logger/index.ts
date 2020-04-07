@@ -24,11 +24,11 @@ const loggerLink = new ApolloLink((operation, forward) => {
     } else {
       logging.groupCollapsed(...group)
       logging.log('INIT', operation)
-      forward(operation).subscribe({
+      /*     forward(operation).subscribe({
         next: (data) => logging.log('RESULT', data),
         error: (error) => logging.log('RESULT', error),
         complete: () => logging.groupEnd(...group)
-      })
+      }) */
     }
   }
   //ssr donothing
