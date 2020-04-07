@@ -29,7 +29,6 @@ export class ChatsResolvers {
   @Subscription('chatCreated')
   chatCreated(@Args('channelChatInput') args) {
     const { channel } = args || { channel: 'chatCreated' }
-    console.log('Sub Channel' + channel)
     return pubSub.asyncIterator(channel)
   }
   /*   @Query('chat')
