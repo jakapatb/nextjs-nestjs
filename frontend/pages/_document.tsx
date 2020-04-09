@@ -29,7 +29,13 @@ export default class MyDocument extends Document {
   render() {
     return (
       <html lang="en">
-        <Head>{/* PWA primary color */}</Head>
+        <Head>
+          {/* PWA primary color */}
+          <link
+            href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;700&display=swap"
+            rel="stylesheet"
+          ></link>
+        </Head>
         <body>
           <Main />
           <NextScript />

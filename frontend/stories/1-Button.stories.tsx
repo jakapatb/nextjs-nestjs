@@ -7,8 +7,11 @@ export default {
   component: Button
 }
 
-export const Text = () => (
-  <Button onClick={action('clicked')} bg="blue" width={['5rem', '10rem', '25rem', '80rem']} fontSize={[3, 4, 5]}>
-    Hello Button
-  </Button>
+export const Outline = () => (
+  <div style={{ display: 'inline-grid', gridGap: '1rem', backgroundColor: 'black' }}>
+    <Button onClick={action('clicked')}>Button</Button>
+    <Button onClick={action('clicked')} disabled>
+      Disabled
+    </Button>
+  </div>
 )
