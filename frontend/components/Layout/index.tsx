@@ -1,19 +1,17 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import styled from 'styled-components'
 import { color, ColorProps } from 'styled-system'
+import { Header } from './components/header'
+
 const Container = styled.div<ColorProps>`
-  min-height: 100vh;
+  min-height: 1000vh;
   ${color}
-`
-const HeaderContainer = styled.div`
-  width: 100%;
-  display: flex;
 `
 
 export const Layout: React.FC = ({ children }) => {
   return (
-    <Container bg="blue" color="white">
-      <HeaderContainer>Header</HeaderContainer>
+    <Container bg="oceanBlue" color="white">
+      <Header />
       {children}
       <div>Footer</div>
     </Container>
