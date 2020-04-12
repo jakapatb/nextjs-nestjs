@@ -1,40 +1,45 @@
-import React from 'react'
+import React, { useRef, useEffect } from 'react'
 import styled from 'styled-components'
+import { motion, useCycle } from 'framer-motion'
 
 const Container = styled.div`
-  position: relative;
-  &:before {
-    z-index: 1;
-    content: ' ';
-    position: absolute;
-    left: 0;
-    right: 0;
-    top: 0;
-    bottom: 0;
-    background-image: linear-gradient(45deg, #6303b1, #ff0099);
-    transform: skewY(-10deg);
-  }
-`
-const Content = styled.div`
-  z-index: 5;
-  position: relative;
-  max-width: 50rem;
-  margin: 0 auto;
-  min-height: 30rem;
-  display: flex;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(5rem, auto));
+  grid-gap: 2rem;
   justify-content: center;
-  align-items: center;
+  transform: skewY(-10deg);
+  background-image: linear-gradient(45deg, #6303b1, #ff0099);
+`
+const Content = styled(motion.div)`
+  z-index: 5;
+  width: 20rem;
+  height: 20rem;
+
+  margin: 0 auto;
   font-size: 4rem;
-  border: 1px dashed white;
-  background-color: rgba(255, 255, 255, 0.33);
+  border-radius: 1rem;
+  background-color: rgba(0, 0, 0, 0.33);
   backdrop-filter: blur(0.5rem);
-  /* transform: skewY(10deg); */
+  transform: skewY(10deg);
+`
+const Flexable = styled(motion.div)`
+  position: absolute;
+  top: 0;
+  background: blue;
+  bottom: 0;
 `
 
 export const Diagonal: React.FC = ({ children }) => {
+  const containerRef = useRef(null)
+
+  const handleExpand = () => {
+    console.log('expand')
+  }
   return (
     <Container>
-      <Content>{children}</Content>
+      <Content whileHover={{ width: '40rem' }}>Hi</Content>
+      <Content whileHover={{ width: '40rem' }}>Hi</Content>
+      <Content whileHover={{ width: '40rem' }}>Hi</Content>
     </Container>
   )
 }
